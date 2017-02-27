@@ -89,5 +89,62 @@ Call:
     beta  = 0.0315 
 ```
 
-From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically
+From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically (R code in Appendix 1)
 ![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/alphas.png?raw=true)
+
+Now we perform one-step-ahead forecasts for simple, double and triple exponential smoothing, starting from taking the first five year of data for training, and calculate the calculate the forecast MSE
+```
+## Simple Exponential Smoothing
+train <- sales[1:60]
+forecasts <- vector(mode="numeric", length=12)
+for (k in 1:12) {
+	ses.obj <- ses(train, h=1, initial="simple", alpha=NULL)
+	forecasts[k] <- as.numeric(ses.obj$mean)
+	train <- sales[1:(60+k)]
+}
+
+err <- 0
+for (i in 1:12) {
+	err = err + (sales[60+i]-forecasts[i])^2
+}
+mse <- err/12
+> mse
+[1] 6502.202
+
+
+## Double Exponential Smoothing 
+train <- sales[1:60]
+forecasts <- vector(mode="numeric", length=12)
+for (k in 1:12) {
+	holt.obj <- holt(train, h=1, initial="simple", alpha=NULL, beta=NULL)
+	forecasts[k] <- as.numeric(holt.obj$mean)
+	train <- sales[1:(60+k)]
+}
+err <- 0
+for (i in 1:12) {
+	err = err + (sales[60+i]-forecasts[i])^2
+}
+mse <- err/12
+
+> mse
+[1] 6193.2
+
+
+## Triple Exponential Smoothing
+train <- sales[1:60]
+forecasts <- vector(mode="numeric", length=12)
+for (k in 1:12) {
+	hw.obj <- hw(train, h=1, initial="simple", alpha=NULL, beta=NULL, gamma=NULL)
+	forecasts[k] <- as.numeric(hw.obj$mean)
+	train <- sales[1:(60+k)]
+}
+
+err <- 0
+for (i in 1:12) {
+	err = err + (sales[60+i]-forecasts[i])^2
+}
+mse <- err/12
+> mse
+[1] 6193.2
+```
+Thus we can conclude in our case the double and triple exponential smoothing perform better than simple exponential smoothing. We also notice the forecast MSE of the latter two are the same. This is due to automatic function optimization of the seasonality element in Holt-Winters method. Only alpha and beta are provided in the 
