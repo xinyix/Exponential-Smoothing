@@ -89,10 +89,10 @@ Call:
     beta  = 0.0315 
 ```
 
-From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically (R code in Appendix)
+From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically (R code in Appendix). The alpha where its corresponding fitted mse is at minimum is the optimal
 ![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/alphas.png?raw=true)
 
-Now we perform one-step-ahead forecasts for simple, double and triple exponential smoothing, starting from taking the first five year of data for training, and calculate the calculate the forecast MSE
+Now we perform one-step-ahead forecasts for simple, double and triple exponential smoothing, starting from taking the first five year of data for training, and the calculate the forecast MSE
 ```
 ## Simple Exponential Smoothing
 train <- sales[1:60]
