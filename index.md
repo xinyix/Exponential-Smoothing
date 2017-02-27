@@ -34,10 +34,10 @@ Plot data
 ### Determine whether simple, double or triple exponential smoothing is appropriate for this data set
 From a look at the plot, we found there is a upward trend and possible seasonality in our data. So the better choices are either double (considers trend element) or triple exponential smoothing (considers trend and seasonality). We will justify our belief by taking the first 5 year worth of data as training set, and the rest as testing set. We will see which of the three methods gives the smallest mean squared error.  
 
-We first determine the optimal smoothing constant for each of the three methods
+We first determine the optimal smoothing constant (when n=72) for each of the three methods
 ```
 ## Simple Exponential Smoothing
-> single <- ses(train, h=12, initial="simple", alpha=NULL)
+> single <- ses(salestimeseries, h=1, initial="simple", alpha=NULL)
 > summary(single)
 
 Forecast method: Simple exponential smoothing
@@ -46,13 +46,14 @@ Model Information:
 Simple exponential smoothing 
 
 Call:
- ses(y = train, h = 12, initial = "simple", alpha = NULL) 
+ ses(y = salestimeseries, h = 1, initial = "simple", alpha = NULL) 
 
   Smoothing parameters:
-    alpha = 0.4834 
+    alpha = 0.5022 
+    
     
 ## Double Exponential Smoothing
-> double <- holt(train, h=12, initial="simple", alpha=NULL, beta=NULL)
+> double <- holt(salestimeseries, h=1, initial="simple", alpha=NULL, beta=NULL)
 > summary(double)
 
 Forecast method: Holt's method
@@ -61,14 +62,15 @@ Model Information:
 Holt's method 
 
 Call:
- holt(y = train, h = 12, initial = "simple", alpha = NULL, beta = NULL) 
+ holt(y = salestimeseries, h = 1, initial = "simple", alpha = NULL, beta = NULL) 
 
   Smoothing parameters:
-    alpha = 0.4804 
-    beta  = 0.0016 
+    alpha = 0.4123 
+    beta  = 0.0315 
+
 
 ## Triple Exponential Smoothing
-> triple <- hw(train, h=12, initial="simple", alpha=NULL, beta=NULL, gamma=NULL)
+> triple <- hw(salestimeseries, h=1, initial="simple", alpha=NULL, beta=NULL, gamma=NULL)
 > summary(triple)
 
 Forecast method: Holt-Winters' additive method
@@ -77,15 +79,15 @@ Model Information:
 Holt-Winters' additive method 
 
 Call:
- hw(y = train, h = 12, initial = "simple", alpha = NULL, beta = NULL,  
+ hw(y = salestimeseries, h = 1, initial = "simple", alpha = NULL, beta = NULL,  
 
  Call:
      gamma = NULL) 
 
   Smoothing parameters:
-    alpha = 0.4455 
-    beta  = 0 
-    gamma = 0.1744 
+    alpha = 0.4123 
+    beta  = 0.0315 
 ```
 
-From the function calls above, we have alpha_ses=0.4834, alpha_holt=0.4804, alpha_hw=0.4455. I also included a plot to illustrate the optimal smoothing constants graphically
+From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically
+![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/alphas.png?raw=true)
