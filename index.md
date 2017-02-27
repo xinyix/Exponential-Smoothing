@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Exponential-Smoothing
 
-You can use the [editor on GitHub](https://github.com/xinyix/Exponential-Smoothing/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+We will be using the "forecast" package in R
+```
+library(forecast)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Consider the monthly sales of computer software packages of undergraduate college-level education curriculum development. The sale of these programs started in 1976. The data for January 1976 to December 1981 (n=72) are given below
+```
+sales <- c(2, 2, 4, 12, 0, 81, 58, 59, 25, 22, 87, 35, 22, 23, 10, 6, 7, 31, 132, 21, 48, 56, 87, 48, 69, 97, 155, 96, 62, 100, 61, 101, 79, 72, 49, 112, 104, 216, 115, 215, 178, 233, 239, 217, 196, 228, 164, 151, 194, 152, 114, 114, 151, 205, 292, 180, 213, 220, 193, 135, 317, 305, 298, 315, 231, 361, 353, 256, 257, 340, 438, 442)
+```
 
-### Jekyll Themes
+Prepare the data for time series analysis
+```
+> salestimeseries <- ts(sales, frequency=12, start=c(1976, 1))
+> salestimeseries
+     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1976   2   2   4  12   0  81  58  59  25  22  87  35
+1977  22  23  10   6   7  31 132  21  48  56  87  48
+1978  69  97 155  96  62 100  61 101  79  72  49 112
+1979 104 216 115 215 178 233 239 217 196 228 164 151
+1980 194 152 114 114 151 205 292 180 213 220 193 135
+1981 317 305 298 315 231 361 353 256 257 340 438 442
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/xinyix/Exponential-Smoothing/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Plot data
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+### Simple Exponential 
