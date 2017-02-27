@@ -1,6 +1,6 @@
 ## Exponential-Smoothing
 
-### Define problem and generate data
+### Define Problem and Generate Data
 Consider the monthly sales of computer software packages of undergraduate college-level education curriculum development. The sale of these programs started in 1976. The data for January 1976 to December 1981 (n=72) are given below
 ```
 sales <- c(2, 2, 4, 12, 0, 81, 58, 59, 25, 22, 87, 35, 22, 23, 10, 6, 7, 31, 132, 21, 48, 56, 87, 48, 69, 97, 155, 96, 62, 100, 61, 101, 79, 72, 49, 112, 104, 216, 115, 215, 178, 233, 239, 217, 196, 228, 164, 151, 194, 152, 114, 114, 151, 205, 292, 180, 213, 220, 193, 135, 317, 305, 298, 315, 231, 361, 353, 256, 257, 340, 438, 442)
@@ -31,7 +31,7 @@ Plot data
 ![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/sales.png?raw=true)
 
 
-### Determine whether simple, double or triple exponential smoothing is appropriate for this data set
+### Simple, Double or Triple Exponential Smoothing?
 From a look at the plot, we found there is a upward trend and possible seasonality in our data. So the better choices are either double (considers trend element) or triple exponential smoothing (considers trend and seasonality). We will justify our belief by taking the first 5 year worth of data as training set, and the rest as testing set. We will see which of the three methods gives the smallest mean squared error.  
 
 We first determine the optimal smoothing constant (when n=72) for each of the three methods
