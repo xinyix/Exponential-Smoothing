@@ -89,7 +89,7 @@ Call:
     beta  = 0.0315 
 ```
 
-From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically (R code in Appendix 1)
+From the function calls above, we have alpha_ses=0.5022, alpha_holt=alpha_hw=0.4123. I also included a plot to illustrate the optimal smoothing constants graphically (R code in Appendix)
 ![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/alphas.png?raw=true)
 
 Now we perform one-step-ahead forecasts for simple, double and triple exponential smoothing, starting from taking the first five year of data for training, and calculate the calculate the forecast MSE
@@ -147,4 +147,43 @@ mse <- err/12
 > mse
 [1] 6193.2
 ```
-Thus we can conclude in our case the double and triple exponential smoothing perform better than simple exponential smoothing. We also notice the forecast MSE of the latter two are the same. This is due to automatic function optimization of the seasonality element in Holt-Winters method. Only alpha and beta are provided in the 
+Thus we can conclude in our case double and triple exponential smoothing perform better than simple exponential smoothing. We also notice the forecast MSE of double and triple exponential smoothing are the same. This is due to automatic parameter optimization of the Holt-Winters function, gamma is ignored. This means there are no significant seasonal component in our data.
+
+## Appendix
+```
+## define a sequence of alphas
+alphas <- seq(0.1, 0.99, length.out=100)
+ 
+## for each method, define functions for calculating fitted MSE
+SesMseOut <- function (x) {
+	ses.obj <- ses(salestimeseries, h=1, initial="simple", alpha=x)
+ 	mse <- sum(ses.obj$residuals^2)/length(ses.obj$residuals)
+ 	return(mse)
+} 
+
+HoltMseOut <- function (x) {
+	holt.obj <- holt(salestimeseries, h=1, initial="simple", alpha=x, beta=NULL)
+ 	mse <- sum(holt.obj$residuals^2)/length(holt.obj$residuals)
+ 	return(mse)
+} 
+
+HoltWintersMseOut <- function (x) {
+	hw.obj <- hw(salestimeseries, h=1, initial="simple", alpha=x, beta=NULL, gamma=NULL)
+ 	mse <- sum(hw.obj$residuals^2)/length(hw.obj$residuals)
+ 	return(mse)
+} 
+
+## return values
+ses.mse <- lapply(alphas, SesMseOut)
+holt.mse <- lapply(alphas, HoltMseOut)
+hw.mse <- lapply(alphas, HoltWintersMseOut)
+
+## plot results
+plot(alphas, ses.mse, ylab="Fitted MSE", ylim=c(2000, 4500), pch=18, type="b", col="red")
+par(new=TRUE)
+plot(alphas, holt.mse, ylab="", ylim=c(2000, 4500), pch=13, type="b", col="blue")
+par(new=TRUE)
+plot(alphas, hw.mse, ylab="", ylim=c(2000, 4500), pch=19, type="b", col="yellow")
+legend(0.6, 4000, legend=c("ses", "holt", "hw"), col=c("red", "blue", "yellow"), lty=1:2)
+ 
+```
