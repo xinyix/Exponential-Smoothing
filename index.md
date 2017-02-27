@@ -24,7 +24,10 @@ Prepare the data for time series analysis
 ```
 
 Plot data
-
+```
+> plot(salestimeseries, xlab="Year", ylab="Sales", main="Monthly Sales of Computer Software Package")
+```
+![original resid dist](https://github.com/xinyix/Exponential-Smoothing/blob/master/sales.png?raw=true)
 
 
 ### Simple Exponential 
