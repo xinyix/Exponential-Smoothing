@@ -1,5 +1,6 @@
 ## Exponential-Smoothing
 
+
 ### Define Problem and Generate Data
 Consider the monthly sales of computer software packages of undergraduate college-level education curriculum development. The sale of these programs started in 1976. The data for January 1976 to December 1981 (n=72) are given below
 ```
@@ -187,3 +188,10 @@ plot(alphas, hw.mse, ylab="", ylim=c(2000, 4500), pch=19, type="b", col="yellow"
 legend(0.6, 4000, legend=c("ses", "holt", "hw"), col=c("red", "blue", "yellow"), lty=1:2)
  
 ```
+Test this
+$$\beta_0=\alpha_1$$
+
+
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
